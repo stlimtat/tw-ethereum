@@ -8,7 +8,6 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var addr string
@@ -34,19 +33,18 @@ func newRootCmd(ctx context.Context) *rootCmd {
 		Short: "An ethereum transaction cli",
 		Long:  `An ethereum transaction cli for trustwallet take home test`,
 	}
-	result.cmd.PersistentFlags().StringP("addr", "a", "", "Address to query")
-	err := viper.BindPFlag("addr", result.cmd.PersistentFlags().Lookup("addr"))
-	if err != nil {
-		logger.Fatal().Err(err).Msg("viper.BindPFlag.addr")
-	}
-	err = result.cmd.ExecuteContext(ctx)
+	err := result.cmd.ExecuteContext(ctx)
 	if err != nil {
 		logger.Fatal().Err(err).Msg("rootCmd.Execute")
 	}
+	_, blockCmd := newBlockCmd(ctx)
 	_, listCmd := newListCmd(ctx)
+	_, subscribeCmd := newSubscribeCmd(ctx)
 
 	result.cmd.AddCommand(
+		blockCmd,
 		listCmd,
+		subscribeCmd,
 	)
 	return result
 }

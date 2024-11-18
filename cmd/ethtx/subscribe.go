@@ -12,24 +12,24 @@ import (
 	"github.com/stlimtat/tw-ethereum/internal/config"
 )
 
-type listCmd struct {
+type subscribeCmd struct {
 	cmd *cobra.Command
-	cfg config.ListConfig
+	cfg config.SubscribeConfig
 }
 
-func newListCmd(ctx context.Context) (*listCmd, *cobra.Command) {
+func newSubscribeCmd(ctx context.Context) (*subscribeCmd, *cobra.Command) {
 	logger := zerolog.Ctx(ctx)
 	logger.Debug().Msg("Testing")
 
-	result := &listCmd{}
+	result := &subscribeCmd{}
 
 	// serverCmd represents the server command
 	result.cmd = &cobra.Command{
-		Use:   "list",
-		Short: "Lists transactions for an ethereum account",
-		Long:  `Lists the transactions for an ethereum user`,
+		Use:   "subscribe",
+		Short: "Subscribe to transaction updates for ethereum",
+		Long:  `Subscribe to transaction updates for ethereum`,
 		Run: func(cmd *cobra.Command, args []string) {
-			logger.Debug().Msg("list.run")
+			logger.Debug().Msg("subscribe.run")
 		},
 	}
 	result.cmd.PersistentFlags().StringP("addr", "a", "", "Address of the customer")
@@ -37,7 +37,7 @@ func newListCmd(ctx context.Context) (*listCmd, *cobra.Command) {
 	if err != nil {
 		logger.Fatal().Err(err).Msg("viper.BindPFlag.addr")
 	}
-	result.cfg = config.NewListConfig(ctx)
+	result.cfg = config.NewSubscribeConfig(ctx)
 
 	return result, result.cmd
 }
