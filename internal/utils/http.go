@@ -23,7 +23,7 @@ func DoPost(
 		logger.Error().Err(err).Msg("json.Marshal")
 		return nil, err
 	}
-	logger.Info().Bytes("jsonBytes", jsonBytes).Msg("jsonMarshal")
+	logger.Info().Msg("jsonMarshal")
 	byteReader := bytes.NewReader(jsonBytes)
 
 	req, err := http.NewRequestWithContext(

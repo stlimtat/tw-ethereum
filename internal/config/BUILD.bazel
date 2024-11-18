@@ -2,15 +2,12 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "config",
-    srcs = [
-        "list.go",
-        "subscribe.go",
-    ],
+    srcs = ["root.go"],
     importpath = "github.com/stlimtat/tw-ethereum/internal/config",
     visibility = ["//:__subpackages__"],
     deps = [
         "@com_github_mitchellh_go_homedir//:go-homedir",
-        "@com_github_rs_zerolog//:zerolog",
+        "@com_github_rs_zerolog//log",
         "@com_github_spf13_viper//:viper",
     ],
 )

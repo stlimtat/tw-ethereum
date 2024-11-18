@@ -19,6 +19,6 @@ func main() {
 	rootCmd := newRootCmd(ctx)
 	err := rootCmd.cmd.ExecuteContext(ctx)
 	if err != nil {
-		logger.Fatal().Err(err).Msg("ExecuteContext")
+		logger.Fatal().Err(err).Msg("rootCmd.ExecuteContext")
 	}
 }

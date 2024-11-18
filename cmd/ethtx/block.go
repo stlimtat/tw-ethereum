@@ -28,7 +28,7 @@ func newBlockCmd(ctx context.Context) (*blockCmd, *cobra.Command) {
 		Use:   "block",
 		Short: "Get the current block number for ethereum",
 		Long:  `Get the current block number for ethereum`,
-		Run: func(cmd *cobra.Command, args []string) {
+		Run: func(cmd *cobra.Command, _ []string) {
 			logger.Debug().Msg("block.run")
 			result.parser = ethereum.NewDefaultParser(cmd.Context())
 			blockResult := result.parser.GetCurrentBlock(ctx)
