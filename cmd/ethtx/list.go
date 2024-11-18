@@ -15,7 +15,7 @@ import (
 
 type listCmd struct {
 	cmd    *cobra.Command
-	cfg    config.ListConfig
+	cfg    config.RootConfig
 	parser ethereum.IParser
 }
 
@@ -32,7 +32,7 @@ func newListCmd(ctx context.Context) (*listCmd, *cobra.Command) {
 		Long:  `Lists the transactions for an ethereum user`,
 		Run: func(cmd *cobra.Command, args []string) {
 			logger.Debug().Msg("list.run")
-			var lcfg config.ListConfig
+			var lcfg config.RootConfig
 			err := viper.Unmarshal(&lcfg)
 			if err != nil {
 				logger.Fatal().Err(err).Msg("viper.Unmarshal")

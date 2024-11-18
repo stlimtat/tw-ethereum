@@ -15,7 +15,7 @@ import (
 func TestDoPost(t *testing.T) {
 	tests := []struct {
 		name       string
-		req        interface{}
+		req        any
 		statusCode int
 		want       bool
 		wantErr    bool

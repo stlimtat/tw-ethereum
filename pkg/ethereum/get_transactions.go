@@ -10,7 +10,8 @@ import (
 )
 
 const (
-	METHOD_GETLOG = "eth_getLogs"
+	METHOD_GETLOG           = "eth_getLogs"
+	METHOD_GETFILTERCHANGES = "eth_getFilterChanges"
 )
 
 type GetTransactionsRequest struct {
@@ -37,11 +38,14 @@ func (p *DefaultParser) GetTransactions(ctx context.Context, address string) ([]
 	b := make([]byte, 16)
 	randInt, _ := rand.Read(b)
 
+	// 1. if address is in p.subscribedAddr, then run eth_getFilterChanges
+	// 2. else run eth_getLogs
+
 	gtReq := GetTransactionsRequest{
 		EthereumRequest: EthereumRequest{
 			Id:      randInt,
 			JSONRPC: DEFAULT_JSON_RPC,
-			Method:  METHOD_GETBALANCE,
+			Method:  METHOD_GETLOG,
 		},
 		Params: []GetLogRequestParam{
 			{

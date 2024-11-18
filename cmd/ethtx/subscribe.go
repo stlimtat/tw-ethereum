@@ -8,13 +8,12 @@ import (
 
 	"github.com/rs/zerolog"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"github.com/stlimtat/tw-ethereum/internal/config"
 )
 
 type subscribeCmd struct {
 	cmd *cobra.Command
-	cfg config.SubscribeConfig
+	cfg config.RootConfig
 }
 
 func newSubscribeCmd(ctx context.Context) (*subscribeCmd, *cobra.Command) {
@@ -30,14 +29,11 @@ func newSubscribeCmd(ctx context.Context) (*subscribeCmd, *cobra.Command) {
 		Long:  `Subscribe to transaction updates for ethereum`,
 		Run: func(cmd *cobra.Command, args []string) {
 			logger.Debug().Msg("subscribe.run")
+			// 1. maintain a list of address vs id
+			// 2. run eth_newFilter
+			// 3. run eth_getFilterLogs
 		},
 	}
-	result.cmd.PersistentFlags().StringP("addr", "a", "", "Address of the customer")
-	err := viper.BindPFlag("addr", result.cmd.PersistentFlags().Lookup("addr"))
-	if err != nil {
-		logger.Fatal().Err(err).Msg("viper.BindPFlag.addr")
-	}
-	result.cfg = config.NewSubscribeConfig(ctx)
 
 	return result, result.cmd
 }

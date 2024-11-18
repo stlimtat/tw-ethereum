@@ -13,7 +13,7 @@ import (
 
 func DoPost(
 	ctx context.Context,
-	reqStruct interface{},
+	reqStruct any,
 	url string,
 ) ([]byte, error) {
 	logger := zerolog.Ctx(ctx).With().Interface("req", reqStruct).Logger()
