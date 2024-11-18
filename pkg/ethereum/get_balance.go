@@ -1,12 +1,8 @@
 package ethereum
 
 import (
-	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
 
 	"github.com/rs/zerolog"
 	"github.com/stlimtat/tw-ethereum/internal/utils"
@@ -40,43 +36,17 @@ func (p *DefaultParser) GetBalance(ctx context.Context, address string) (int64, 
 			"latest",
 		},
 	}
-	jsonBytes, err := json.Marshal(gbReq)
-	byteReader := bytes.NewReader(jsonBytes)
+	body, err := utils.DoPost(ctx, gbReq, ETHEREUM_URL)
+	if err != nil {
+		return 0, err
+	}
 
-	req, err := http.NewRequest(
-		http.MethodPost,
-		ETHEREUM_URL,
-		byteReader,
-	)
-	if err != nil {
-		logger.Error().Err(err).Msg("NewRequest")
-		return -1, err
-	}
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		logger.Error().Err(err).Msg("DefaultClient.Do")
-		return -1, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode/100 != 2 {
-		err = fmt.Errorf("resp.StatusCode not 200")
-		logger.Error().
-			Err(err).
-			Int("resp_status", resp.StatusCode).
-			Msg("DefaultClient.Do")
-		return -1, err
-	}
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		logger.Error().Err(err).Msg("io.ReadAll")
-		return -1, err
-	}
 	var gbResp GetBalanceResp
 	err = json.Unmarshal(body, &gbResp)
 	if err != nil {
 		logger.Error().Err(err).Msg("json.Unmarshal")
 		return -1, err
 	}
-	result := utils.HexToInt64(gbResp.Result)
+	result := utils.HexToInt64(ctx, gbResp.Result)
 	return result, nil
 }

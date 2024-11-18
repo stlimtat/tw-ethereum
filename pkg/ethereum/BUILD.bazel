@@ -15,6 +15,6 @@ go_library(
     deps = [
         "//internal/utils",
         "@com_github_rs_zerolog//:zerolog",
-        "@org_uber_go_mock//gomock:go_default_library",
+        "@org_uber_go_mock//gomock",
     ],
 )
