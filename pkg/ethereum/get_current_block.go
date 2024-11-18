@@ -2,6 +2,7 @@ package ethereum
 
 import (
 	"context"
+	"crypto/rand"
 	"encoding/json"
 
 	"github.com/rs/zerolog"
@@ -13,6 +14,8 @@ const (
 )
 
 type GetCurrentBlockRequest struct {
+	// JSONRPC string   `json:"jsonrpc"`
+	// Method  string   `json:"method"`
 	EthereumRequest
 	Params []string `json:"params"`
 }
@@ -28,10 +31,16 @@ func (p *DefaultParser) GetCurrentBlock(ctx context.Context) int {
 		Str(METHOD, METHOD_BLOCKNUMBER).
 		Logger()
 
+	b := make([]byte, 16)
+	randInt, _ := rand.Read(b)
+
 	gcbReq := GetCurrentBlockRequest{
-		JSONRPC: DEFAULT_JSON_RPC,
-		Method:  METHOD_BLOCKNUMBER,
-		Params:  []string{},
+		EthereumRequest: EthereumRequest{
+			Id:      randInt,
+			JSONRPC: DEFAULT_JSON_RPC,
+			Method:  METHOD_BLOCKNUMBER,
+		},
+		Params: []string{},
 	}
 	body, err := utils.DoPost(ctx, gcbReq, ETHEREUM_URL)
 	if err != nil {
@@ -44,6 +53,6 @@ func (p *DefaultParser) GetCurrentBlock(ctx context.Context) int {
 		logger.Error().Err(err).Msg("json.Unmarshal")
 		return -1
 	}
-	result := utils.HexToInt(gcbResp.Result)
+	result := utils.HexToInt(ctx, gcbResp.Result)
 	return result
 }

@@ -2,6 +2,7 @@ package ethereum
 
 import (
 	"context"
+	"crypto/rand"
 	"encoding/json"
 
 	"github.com/rs/zerolog"
@@ -27,10 +28,15 @@ func (p *DefaultParser) GetBalance(ctx context.Context, address string) (int64, 
 		With().
 		Str(METHOD, METHOD_GETBALANCE).
 		Logger()
+	b := make([]byte, 16)
+	randInt, _ := rand.Read(b)
 
 	gbReq := GetBalanceRequest{
-		JSONRPC: DEFAULT_JSON_RPC,
-		Method:  METHOD_GETBALANCE,
+		EthereumRequest: EthereumRequest{
+			Id:      randInt,
+			JSONRPC: DEFAULT_JSON_RPC,
+			Method:  METHOD_GETBALANCE,
+		},
 		Params: []string{
 			address,
 			"latest",

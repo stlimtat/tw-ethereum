@@ -2,6 +2,7 @@ package ethereum
 
 import (
 	"context"
+	"crypto/rand"
 	"encoding/json"
 
 	"github.com/rs/zerolog"
@@ -33,9 +34,15 @@ func (p *DefaultParser) GetTransactions(ctx context.Context, address string) ([]
 		Str("address", address).
 		Logger()
 
+	b := make([]byte, 16)
+	randInt, _ := rand.Read(b)
+
 	gtReq := GetTransactionsRequest{
-		JSONRPC: DEFAULT_JSON_RPC,
-		Method:  METHOD_GETLOG,
+		EthereumRequest: EthereumRequest{
+			Id:      randInt,
+			JSONRPC: DEFAULT_JSON_RPC,
+			Method:  METHOD_GETBALANCE,
+		},
 		Params: []GetLogRequestParam{
 			{
 				Address: address,
