@@ -1,0 +1,20 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "ethereum",
+    srcs = [
+        "get_balance.go",
+        "get_current_block.go",
+        "get_transactions.go",
+        "parser.go",
+        "parser_mock.go",
+        "subscribe.go",
+    ],
+    importpath = "github.com/stlimtat/tw-ethereum/pkg/ethereum",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//internal/utils",
+        "@com_github_rs_zerolog//:zerolog",
+        "@org_uber_go_mock//gomock:go_default_library",
+    ],
+)
