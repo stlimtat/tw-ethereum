@@ -410,6 +410,12 @@ def go_dependencies():
         version = "v1.19.0",
     )
     go_repository(
+        name = "com_github_stretchr_objx",
+        importpath = "github.com/stretchr/objx",
+        sum = "h1:xuMeJ0Sdp5ZMRXx/aWO6RZxdr3beISkG5/G/aIRr3pY=",
+        version = "v0.5.2",
+    )
+    go_repository(
         name = "com_github_stretchr_testify",
         importpath = "github.com/stretchr/testify",
         sum = "h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=",
@@ -420,6 +426,12 @@ def go_dependencies():
         importpath = "github.com/subosito/gotenv",
         sum = "h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8=",
         version = "v1.6.0",
+    )
+    go_repository(
+        name = "com_github_yuin_goldmark",
+        importpath = "github.com/yuin/goldmark",
+        sum = "h1:fVcFKWvrslecOb/tg+Cc05dkeYx540o0FuFt3nUVDoE=",
+        version = "v1.4.13",
     )
     go_repository(
         name = "com_google_cloud_go",
@@ -654,6 +666,12 @@ def go_dependencies():
         importpath = "go.uber.org/atomic",
         sum = "h1:ECmE8Bn/WFTYwEW/bpKD3M8VtR/zQVbavAoalC1PYyE=",
         version = "v1.9.0",
+    )
+    go_repository(
+        name = "org_uber_go_mock",
+        importpath = "go.uber.org/mock",
+        sum = "h1:KAMbZvZPyBPWgD14IrIQ38QCyjwpvVVV6K/bHl1IwQU=",
+        version = "v0.5.0",
     )
     go_repository(
         name = "org_uber_go_multierr",
