@@ -1,4 +1,4 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
-# gazelle:prefix github.com/stlimtat/remiges-smtp
+# gazelle:prefix github.com/stlimtat/tw-ethereum
 gazelle(name = "gazelle")
