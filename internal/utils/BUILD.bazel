@@ -2,7 +2,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "utils",
-    srcs = ["hex.go"],
+    srcs = [
+        "hex.go",
+        "http.go",
+    ],
     importpath = "github.com/stlimtat/tw-ethereum/internal/utils",
     visibility = ["//:__subpackages__"],
     deps = ["@com_github_rs_zerolog//:zerolog"],
@@ -10,6 +13,10 @@ go_library(
 
 go_test(
     name = "utils_test",
-    srcs = ["hex_test.go"],
+    srcs = [
+        "hex_test.go",
+        "http_test.go",
+    ],
     embed = [":utils"],
+    deps = ["@com_github_stretchr_testify//assert"],
 )
